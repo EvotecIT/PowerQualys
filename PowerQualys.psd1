@@ -8,7 +8,7 @@
     Description          = 'Helper module for Qualys'
     FunctionsToExport    = @('Connect-Qualys', 'Get-QualysData', 'Get-QualysGroup', 'Get-QualysHost', 'Get-QualysHostDetection', 'Get-QualysKB', 'Invoke-QualysQuery')
     GUID                 = '8c726ef2-6562-4325-a3c3-d26bec60b76c'
-    ModuleVersion        = '0.1.0'
+    ModuleVersion        = '0.2.0'
     PowerShellVersion    = '5.1'
     PrivateData          = @{
         PSData = @{

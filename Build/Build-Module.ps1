@@ -3,7 +3,7 @@
 Build-Module -ModuleName 'PowerQualys' {
     # Usual defaults as per standard module
     $Manifest = [ordered] @{
-        ModuleVersion        = '0.1.X'
+        ModuleVersion        = '0.X.0'
         GUID                 = '8c726ef2-6562-4325-a3c3-d26bec60b76c'
         # Supported PSEditions
         CompatiblePSEditions = @('Desktop', 'Core')
