@@ -3,9 +3,25 @@
     param(
         [int] $MaximumRecords
     )
-    $Hosts = Get-QualysHostDetection -ShowIGs -QID '45027,45302,90924,91074,91328' -MaximumRecords $MaximumRecords
+    $Hosts = Get-QualysHostDetection -ShowIgs -QID '45027,45302,90924,91074,91328' -MaximumRecords $MaximumRecords
 
-    $Output = foreach ($Computer in $Hosts) {
+    $FilteredHosts = [ordered] @{}
+    foreach ($Computer in $Hosts) {
+        $Name = $Computer.DNS_DATA.HOSTNAME.'#cdata-section'
+        $Computer.LAST_SCAN_DATETIME = [datetime]::ParseExact($Computer.LAST_SCAN_DATETIME, 'yyyy-MM-dd\THH:mm:ss\Z', $null)
+        $Computer.LAST_VM_AUTH_SCANNED_DATE = [datetime]::ParseExact($Computer.LAST_VM_AUTH_SCANNED_DATE, 'yyyy-MM-dd\THH:mm:ss\Z', $null)
+        $Computer.LAST_VM_SCANNED_DATE = [datetime]::ParseExact($Computer.LAST_VM_SCANNED_DATE, 'yyyy-MM-dd\THH:mm:ss\Z', $null)
+
+        if (-not $FilteredHosts[$Name]) {
+            $FilteredHosts[$Name] = $Computer
+        } else {
+            if ($Computer.LAST_SCAN_DATETIME -gt $FilteredHosts[$Name].LAST_SCAN_DATETIME) {
+                $FilteredHosts[$Name] = $Computer
+            }
+        }
+    }
+
+    $Output = foreach ($Computer in $FilteredHosts.Values) {
         $CacheDetection = [ordered] @{}
         foreach ($Detection in $Computer.DETECTION_LIST.DETECTION) {
             $CacheDetection[$Detection.QID] = $Detection
