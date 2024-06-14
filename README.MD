@@ -31,11 +31,7 @@
 Install-Module -Name PowerQualys -Force -Verbose
 ```
 
-
-
-
 ### Examples
-
 
 #### Connecting to Qualys
 
@@ -48,5 +44,49 @@ Connect-Qualys -Url "https://qualysguard.apps.qualys.eu" -Username "username" -P
 Different examples of usage.
 
 ```powershell
+$Query = Invoke-QualysQuery -RelativeUri 'asset/ip/' -Method 'GET' -Body @{ action = 'list' } -Verbose
+$Query | Get-Member -Type Property
+```
 
+```powershell
+$Hosts1 = Get-QualysHost -Verbose -MaximumRecords 2 -ScanDateBefore (Get-Date).AddDays(-1) -Details All/AGs -Native
+$Hosts1 | Format-Table
+```
+
+```powershell
+$Hosts = Get-QualysHostDetection -Verbose -MaximumRecords 2 -ShowIgs -QID '105008,105009,125008', '125028', '45027,45302,90924,91074,91328'
+$Hosts | Format-List
+```
+
+```powershell
+$Query1 = Invoke-QualysQuery -RelativeUri 'report/' -Method 'GET' -Body @{ action = 'list'; id = '45302' } -Verbose
+$Query1.REPORT_LIST_OUTPUT.RESPONSE
+```
+
+```powershell
+$KB1 = Get-QualysKB -Verbose -Ids '106216'
+$KB1 | Format-Table
+
+$KBAfter = Get-QualysKB -Verbose -PublishedAfter (Get-Date).AddDays(-1)
+$KBAfter | Format-Table
+
+$List1 = @(
+    Get-QualysKB -Verbose -Ids '45002'
+    Get-QualysKB -Verbose -Ids '45302'
+    Get-QualysKB -Verbose -Ids '105231'
+    Get-QualysKB -Verbose -Ids '90235'
+)
+$List1
+
+$KB = Get-QualysKB -Verbose
+```
+
+```powershell
+$Groups = Get-QualysGroup -Verbose -MaximumRecords 2
+$Groups
+```
+
+```powershell
+$Users = Get-QualysData -Type LocalAdmins -Verbose #-MaximumRecords 2
+$Users | Format-Table
 ```

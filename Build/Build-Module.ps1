@@ -106,15 +106,6 @@ Build-Module -ModuleName 'PowerQualys' {
 
     } -CopyFilesRelative -IncludeTagName
 
-    # $newConfigurationArtefactSplat = @{
-    #     Type                = 'Script'
-    #     Enable              = $true
-    #     Path                = "$PSScriptRoot\..\Artefacts\Script"
-    #     ScriptName          = 'QualysTest.ps1'
-    #     PostScriptMergePath = "$PSScriptRoot\..\Examples\Package\ExampleToPackage.ps1"
-    # }
-    # New-ConfigurationArtefact @newConfigurationArtefactSplat
-
     # global options for publishing to github/psgallery
     #New-ConfigurationPublish -Type PowerShellGallery -FilePath 'C:\Support\Important\PowerShellGalleryAPI.txt' -Enabled:$true
     #New-ConfigurationPublish -Type GitHub -FilePath 'C:\Support\Important\GitHubAPI.txt' -UserName 'EvotecIT' -Enabled:$true
