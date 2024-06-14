@@ -10,7 +10,7 @@
         [ValidateSet('Confirmed', 'Potential')][string] $IncludeVulnerabilityType,
         [switch] $ShowAssetId,
         [string] $OSPattern,
-        [alias('Qids')][string] $QID,
+        [alias('Qids')][string[]] $QID,
         [string] $Severities,
         [switch] $ShowIgs
     )
@@ -61,7 +61,7 @@
         $invokeQualysQuerySplat.Body['os_pattern'] = $OSPattern
     }
     if ($QID) {
-        $invokeQualysQuerySplat.Body['qids'] = $QID
+        $invokeQualysQuerySplat.Body['qids'] = $QID -join ","
     }
     if ($Severities) {
         $invokeQualysQuerySplat.Body['severities'] = $Severities
